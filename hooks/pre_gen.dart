@@ -29,7 +29,8 @@ Future<void> run(HookContext context) async {
 
   // 3. Format package.json choices (relative paths)
   final packageJsonChoices = packageJsonFiles.map((file) {
-    final rel = p.relative(file.path, from: targetDir.path).replaceAll('\\', '/');
+    final rel =
+        p.relative(file.path, from: targetDir.path).replaceAll('\\', '/');
     return rel.startsWith('.') ? rel : './$rel';
   }).toList();
 
@@ -43,7 +44,8 @@ Future<void> run(HookContext context) async {
   // Prompt user to select package.json
   final selectedPackageRelative = chooseOption<String>(
     logger: context.logger,
-    message: 'Select the package.json where the Biome dependency should be added:',
+    message:
+        'Select the package.json where the Biome dependency should be added:',
     choices: packageJsonChoices,
     defaultValue: packageJsonChoices.first,
   );
@@ -74,7 +76,7 @@ Future<void> run(HookContext context) async {
   // 6. Prompt to add scripts to package.json
   final addScripts = confirmOption(
     logger: context.logger,
-    message: 'Add Biome scripts ("lint", "format", "check") to package.json?',
+    message: 'Add Biome script ("check") to package.json?',
     defaultValue: true,
   );
 
@@ -83,7 +85,9 @@ Future<void> run(HookContext context) async {
   final isSubfolder = selectedPackageRelative != './package.json' &&
       selectedPackageRelative != 'package.json';
   if (isSubfolder) {
-    final subfolderRel = p.relative(selectedPackageDir.path, from: targetDir.path).replaceAll('\\', '/');
+    final subfolderRel = p
+        .relative(selectedPackageDir.path, from: targetDir.path)
+        .replaceAll('\\', '/');
     final configLocationChoice = chooseOption<String>(
       logger: context.logger,
       message: 'Where would you like to place biome.json?',
@@ -116,7 +120,9 @@ Future<void> run(HookContext context) async {
   context.vars['is_bun'] = isBun;
   context.vars['package_manager'] = selectedPm;
   context.vars['selected_package_json'] = selectedPackageRelative;
-  context.vars['selected_package_dir'] = p.relative(selectedPackageDir.path, from: targetDir.path).replaceAll('\\', '/');
+  context.vars['selected_package_dir'] = p
+      .relative(selectedPackageDir.path, from: targetDir.path)
+      .replaceAll('\\', '/');
   context.vars['place_biome_in_subfolder'] = placeBiomeInSubfolder;
   context.vars['should_install'] = shouldInstall;
 }
@@ -200,7 +206,8 @@ List<File> findPackageJsonFiles(Directory rootDir) {
     for (final entity in entities) {
       final name = p.basename(entity.path);
       if (entity is Directory) {
-        if (name.startsWith('.') || ignoredDirectories.contains(name.toLowerCase())) {
+        if (name.startsWith('.') ||
+            ignoredDirectories.contains(name.toLowerCase())) {
           continue;
         }
         scan(entity);
@@ -234,7 +241,8 @@ bool isBunProject(Directory targetDir, List<File> packageFiles) {
     }
 
     try {
-      final jsonMap = json.decode(pkgFile.readAsStringSync()) as Map<String, dynamic>;
+      final jsonMap =
+          json.decode(pkgFile.readAsStringSync()) as Map<String, dynamic>;
       final pm = (jsonMap['packageManager'] as String?)?.toLowerCase();
       if (pm != null && pm.startsWith('bun')) return true;
 
@@ -282,7 +290,8 @@ String inferPackageManager({
 
   // Check packageManager field in selected package.json
   try {
-    final jsonMap = json.decode(packageFile.readAsStringSync()) as Map<String, dynamic>;
+    final jsonMap =
+        json.decode(packageFile.readAsStringSync()) as Map<String, dynamic>;
     final pm = (jsonMap['packageManager'] as String?)?.toLowerCase();
     if (pm != null) {
       if (pm.startsWith('bun')) return 'bun';
@@ -314,9 +323,10 @@ Future<void> updatePackageJson({
   }
 
   // Add @biomejs/biome to devDependencies
-  final devDependencies = (jsonMap['devDependencies'] as Map<String, dynamic>?) != null
-      ? Map<String, dynamic>.from(jsonMap['devDependencies'] as Map)
-      : <String, dynamic>{};
+  final devDependencies =
+      (jsonMap['devDependencies'] as Map<String, dynamic>?) != null
+          ? Map<String, dynamic>.from(jsonMap['devDependencies'] as Map)
+          : <String, dynamic>{};
 
   devDependencies['@biomejs/biome'] = '^1.9.4';
   jsonMap['devDependencies'] = devDependencies;
@@ -326,15 +336,15 @@ Future<void> updatePackageJson({
         ? Map<String, dynamic>.from(jsonMap['scripts'] as Map)
         : <String, dynamic>{};
 
-    scripts['check'] ??= 'biome check .';
-    scripts['lint'] ??= 'biome lint .';
-    scripts['format'] ??= 'biome format --write .';
+    scripts['check:fix'] ??= 'biome check --write .';
     jsonMap['scripts'] = scripts;
   }
 
   final updatedContent = const JsonEncoder.withIndent('  ').convert(jsonMap);
   await packageFile.writeAsString('$updatedContent\n');
 
-  final displayPath = p.relative(packageFile.path, from: Directory.current.path).replaceAll('\\', '/');
+  final displayPath = p
+      .relative(packageFile.path, from: Directory.current.path)
+      .replaceAll('\\', '/');
   logger.success('Added @biomejs/biome to ./$displayPath devDependencies');
 }

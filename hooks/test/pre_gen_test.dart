@@ -127,8 +127,8 @@ void main() {
       final updated = json.decode(pkg.readAsStringSync()) as Map<String, dynamic>;
       expect(updated['devDependencies']['@biomejs/biome'], equals('^1.9.4'));
       expect(updated['scripts']['check'], equals('biome check .'));
-      expect(updated['scripts']['lint'], equals('biome lint .'));
-      expect(updated['scripts']['format'], equals('biome format --write .'));
+      expect(updated['scripts'].containsKey('lint'), isFalse);
+      expect(updated['scripts'].containsKey('format'), isFalse);
       expect(updated['scripts']['test'], equals('echo 1'));
       expect(updated['dependencies']['react'], equals('^18.0.0'));
     });

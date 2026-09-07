@@ -1,9 +1,9 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
   "vcs": {
-    "enabled": {{#has_git}}true{{/has_git}}{{^has_git}}false{{/has_git}},
+    "enabled": true,
     "clientKind": "git",
-    "useIgnoreFile": {{#has_git}}true{{/has_git}}{{^has_git}}false{{/has_git}}
+    "useIgnoreFile": true
   },
   "files": {
     "ignoreUnknown": false,

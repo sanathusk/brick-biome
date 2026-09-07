@@ -32,7 +32,7 @@ A [Mason](https://github.com/felangel/mason) brick to seamlessly add [Biome](htt
 ### From Git
 
 ```bash
-mason add biome --git-url https://github.com/sanathkumarbs/biome.git
+mason add biome --git-url https://github.com/sanathusk/brick-biome.git
 ```
 
 ### Locally (for development)

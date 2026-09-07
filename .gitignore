@@ -1,0 +1,5 @@
+.dart_tool/
+.mason/
+pubspec.lock
+build/
+

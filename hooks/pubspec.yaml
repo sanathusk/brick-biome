@@ -1,0 +1,11 @@
+name: biome_hooks
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  mason: ^0.1.2
+  path: ^1.9.0
+
+dev_dependencies:
+  test: ^1.25.0

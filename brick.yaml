@@ -1,0 +1,7 @@
+name: biome
+description: A Mason brick that adds Biome dependencies, scripts, and configuration rules to a JS/TS/Bun project.
+
+version: 0.1.0+1
+
+environment:
+  mason: ^0.1.2

@@ -76,7 +76,7 @@ Future<void> run(HookContext context) async {
   // 6. Prompt to add scripts to package.json
   final addScripts = confirmOption(
     logger: context.logger,
-    message: 'Add Biome script ("check") to package.json?',
+    message: 'Add Biome script ("check:fix") to package.json?',
     defaultValue: true,
   );
 
@@ -336,7 +336,7 @@ Future<void> updatePackageJson({
         ? Map<String, dynamic>.from(jsonMap['scripts'] as Map)
         : <String, dynamic>{};
 
-    scripts['check:fix'] ??= 'biome check --write .';
+    scripts['check:fix'] ??= 'bunx --bun @biomejs/biome check --write';
     jsonMap['scripts'] = scripts;
   }
 

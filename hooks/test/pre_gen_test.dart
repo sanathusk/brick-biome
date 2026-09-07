@@ -126,7 +126,7 @@ void main() {
 
       final updated = json.decode(pkg.readAsStringSync()) as Map<String, dynamic>;
       expect(updated['devDependencies']['@biomejs/biome'], equals('^1.9.4'));
-      expect(updated['scripts']['check'], equals('biome check .'));
+      expect(updated['scripts']['check:fix'], equals('bunx --bun @biomejs/biome check --write'));
       expect(updated['scripts'].containsKey('lint'), isFalse);
       expect(updated['scripts'].containsKey('format'), isFalse);
       expect(updated['scripts']['test'], equals('echo 1'));

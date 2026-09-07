@@ -14,7 +14,7 @@ A [Mason](https://github.com/felangel/mason) brick to seamlessly add [Biome](htt
 - 🎯 **Interactive Selection**:
   - Prompts you to pick which `package.json` file should receive the Biome dependency (ideal for monorepos with sub-packages!).
   - Prompts you to confirm or choose the package manager (`bun`, `pnpm`, `npm`, `yarn`).
-  - Prompts to optionally add Biome scripts (`check`, `lint`, `format`) to `package.json`.
+-  - Prompts to optionally add the Biome script (`check:fix`) to `package.json`.
   - Prompts where to place `biome.json` (project root or package subfolder).
   - Prompts whether to run the package manager install command immediately.
 - 🚀 **`biome.json` Template Generation**:
@@ -69,7 +69,7 @@ mason make biome
 ? Select the package.json where the Biome dependency should be added: › ./apps/web/package.json
 💡 Inferred package manager: bun
 ? Select the package manager to be used: › bun
-? Add Biome scripts ("lint", "format", "check") to package.json? › Yes
+? Add Biome script ("check:fix") to package.json? › Yes
 ? Where would you like to place biome.json? › Project root (./biome.json)
 ? Run "bun" to install @biomejs/biome now? › Yes
 ✔ Added @biomejs/biome to ./apps/web/package.json devDependencies
@@ -79,9 +79,7 @@ mason make biome
 ✨ Biome setup completed successfully!
 
 Next steps:
-  • Check code:    bun run check
-  • Format code:   bun run format
-  • Lint code:     bun run lint
+  • Check code:    bun run check:fix
 ```
 
 ---
@@ -91,7 +89,7 @@ Next steps:
 - **`biome.json`**: Generated from `__brick__/biome.json` template and configured with formatting, linter, VCS, and ignore rules.
 - **`package.json`**: Updated with:
   - `"@biomejs/biome": "^1.9.4"` in `devDependencies`.
-  - `"check": "biome check ."`, `"lint": "biome lint ."`, and `"format": "biome format --write ."` in `scripts`.
+  - `"check:fix": "bunx --bun @biomejs/biome check --write"` in `scripts`.
 
 ---
 

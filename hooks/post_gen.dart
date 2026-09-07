@@ -81,9 +81,7 @@ Future<void> run(HookContext context) async {
   context.logger.success('✨ Biome setup completed successfully!');
   context.logger.info('');
   context.logger.info('Next steps:');
-  context.logger.info('  • Check code:    $packageManager run check');
-  context.logger.info('  • Format code:   $packageManager run format');
-  context.logger.info('  • Lint code:     $packageManager run lint');
+  context.logger.info('  • Check code:    $packageManager run check:fix');
 }
 
 /// Relocates the generated biome.json from [targetDir] to [destinationDir] if needed.
